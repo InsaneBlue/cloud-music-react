@@ -1,13 +1,16 @@
-import logo from './logo.svg';
 import { GlobalStyle}  from './style'
 import { HashRouter } from 'react-router-dom'
+import {renderRoutes} from 'react-router-config'
+import routes from "./routes/index.js";
 import './App.css';
 
 function App() {
   return (
     <HashRouter>
       <GlobalStyle></GlobalStyle>
-      <img src={logo} className="App-logo" alt="logo" />
+
+      { renderRoutes(routes) }
+
     </HashRouter>
   );
 }
