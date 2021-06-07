@@ -1,7 +1,7 @@
 import React from "react";
 import { renderRoutes } from "react-router-config";
-import { Top, Tab, TabItem } from "./HomeLayout.style";
 import { NavLink } from "react-router-dom";
+import { Top, Tab, TabItem } from "./HomeLayout.style";
 
 function Home(props) {
   const { route } = props;

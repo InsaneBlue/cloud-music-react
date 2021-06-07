@@ -6,12 +6,12 @@ import HomeLayout from "../layouts/HomeLayout";
 const SuspenseComponent = (Component) => (props) => {
   return (
     <Suspense fallback={null}>
-      <Component {...props}></Component>
+      <Component {...props} />
     </Suspense>
   );
 };
 
-const Home = lazy(() => import("../application/Home/"));
+const Home = lazy(() => import("../application/Home"));
 
 const routes = [
   {
@@ -24,7 +24,7 @@ const routes = [
           {
             path: "/",
             exact: true,
-            render: () => <Redirect to={"/recommend"} />,
+            render: () => <Redirect to="/recommend" />,
           },
           {
             path: "/recommend",
