@@ -12,6 +12,7 @@ const SuspenseComponent = (Component) => (props) => {
 };
 
 const Home = lazy(() => import("../application/Home"));
+const Recommend = lazy(() => import("../application/Recommend"));
 
 const routes = [
   {
@@ -28,11 +29,11 @@ const routes = [
           },
           {
             path: "/recommend",
-            component: SuspenseComponent(Home),
+            component: SuspenseComponent(Recommend),
             routes: [
               {
                 path: "/recommend:id",
-                component: SuspenseComponent(Home),
+                component: SuspenseComponent(Recommend),
               },
             ],
           },
