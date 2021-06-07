@@ -1,15 +1,15 @@
 import { lazy, Suspense } from "react";
-import {Redirect} from 'react-router-dom'
+import { Redirect } from "react-router-dom";
 import BlankLayout from "../layouts/BlankLayout";
 import HomeLayout from "../layouts/HomeLayout";
 
-const SuspenseComponent = Component => props => {
+const SuspenseComponent = (Component) => (props) => {
   return (
     <Suspense fallback={null}>
       <Component {...props}></Component>
     </Suspense>
-  )
-}
+  );
+};
 
 const Home = lazy(() => import("../application/Home/"));
 
@@ -24,7 +24,7 @@ const routes = [
           {
             path: "/",
             exact: true,
-            render: () => <Redirect to={"/recommend"} />
+            render: () => <Redirect to={"/recommend"} />,
           },
           {
             path: "/recommend",
@@ -32,9 +32,9 @@ const routes = [
             routes: [
               {
                 path: "/recommend:id",
-                component: SuspenseComponent(Home)
-              }
-            ]
+                component: SuspenseComponent(Home),
+              },
+            ],
           },
         ],
       },
