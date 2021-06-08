@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { SliderContainer } from "./style";
-import "swiper/swiper.min.css";
+import "swiper/dist/css/swiper.css";
 import Swiper from "swiper";
 
 function Slider(props) {
@@ -17,7 +17,6 @@ function Slider(props) {
         },
         pagination: { el: ".swiper-pagination" },
       });
-      console.log();
       setSliderSwiper(sliderSwiper);
     }
   }, [bannerList.length, sliderSwiper]);
