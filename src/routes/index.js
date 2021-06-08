@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Redirect } from "react-router-dom";
-import BlankLayout from "../layouts/BlankLayout";
 import HomeLayout from "../layouts/HomeLayout";
+import BlankLayout from "../layouts/BlankLayout";
 
 const SuspenseComponent = (Component) => (props) => {
   return (
