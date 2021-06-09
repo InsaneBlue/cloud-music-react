@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+# react hooks+redux+immutable.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+打开方式:
+1. 将项目 clone 下来
+```shell
+$ git clone https://github.com/InsaneBlue/cloud-music-react.git
+$ cd cloud-music
+$ npm install
 
-## Available Scripts
+// 下载子模块
+$ git submodule update --init --recursive
+$ cd NeteaseCloudMusicApi
+$ npm install
+$ cd ../  (注意: 一定要返回到上一层)
+```
 
-In the project directory, you can run:
+2. 运行
+```shell
+$ npm run start
+```
+后端服务运行在9010端口，前端页面访问9000端口。如果要打包到线上，执行`npm run build`即可。
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+项目介绍:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c80048984d1af3?w=1423&h=1092&f=png&s=407282)
 
-### `npm test`
+### 功能介绍
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 1、推荐部分
 
-### `npm run build`
+首页推荐:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f735b83a0d15?w=372&h=668&f=gif&s=2856467)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+推荐歌单详情:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f75ca0469552?w=372&h=668&f=gif&s=1862466)
 
-### `npm run eject`
+空中切入切出效果，另外还有随着滑动会产生和标题跑马灯效果。
+在歌单中歌曲数量过多的情况下，做了分页处理，随着滚动不断进行上拉加载，防止大量DOM加载导致的页面卡顿。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 2、歌手部分
+歌手列表:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f793e8a1524b?w=372&h=668&f=gif&s=1224668)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+这里做了异步加载的处理，上拉到底进行新数据的获取，下拉则进行数据的重新加载。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+歌手详情:
 
-## Learn More
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f7ea74fffa11?w=372&h=668&f=gif&s=2435912)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 3、排行榜
 
-### Code Splitting
+榜单页:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f811ec0f7375?w=372&h=668&f=gif&s=2334445)
 
-### Analyzing the Bundle Size
+榜单详情:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f82639a1dc34?w=372&h=668&f=gif&s=2162917)
 
-### Making a Progressive Web App
+#### 4、播放器
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+播放器内核:
 
-### Advanced Configuration
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f8a5687ebb93?w=372&h=668&f=gif&s=3339773)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+播放列表:
 
-### Deployment
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c7f98711c43ae3?w=372&h=667&f=gif&s=2223620)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+会有移动端app一样的反弹效果。
 
-### `npm run build` fails to minify
+#### 5、搜索部分
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![](https://user-gold-cdn.xitu.io/2019/8/11/16c804bd87a2dbbe?w=372&h=667&f=gif&s=1275414)

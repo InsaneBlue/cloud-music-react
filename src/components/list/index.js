@@ -2,6 +2,7 @@ import React from "react";
 import { ListWrapper, ListItem, List } from "./style";
 import LazyLoad from "react-lazyload";
 import { withRouter } from "react-router-dom";
+import musicIcon from "./music.png";
 
 function RecommendList(props) {
   const enterDetail = (id) => {
@@ -21,7 +22,7 @@ function RecommendList(props) {
                     <img
                       width="100%"
                       height="100%"
-                      src={require("./music.png")}
+                      src={musicIcon}
                       alt="music"
                     />
                   }
