@@ -6,9 +6,12 @@ import * as actionTypes from "./store/actionCreators";
 import Slider from "../../components/slider";
 import RecommendList from "../../components/list/";
 import Scroll from "../../baseUI/scroll/index";
+import Loading from "../../baseUI/loading-v2/index";
+import { renderRoutes } from "react-router-config";
+import { EnterLoading } from "./../Singers/style";
 
 function Recommend(props) {
-  const { songsCount, recommendList, bannerList } = props;
+  const { songsCount = 10, recommendList, bannerList, enterLoading } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
   useEffect(() => {
@@ -31,6 +34,14 @@ function Recommend(props) {
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+
+      {enterLoading ? (
+        <EnterLoading>
+          <Loading></Loading>
+        </EnterLoading>
+      ) : null}
+
+      {renderRoutes(props.route.routes)}
     </Content>
   );
 }
@@ -38,6 +49,8 @@ function Recommend(props) {
 const mapStateToProps = (state) => ({
   bannerList: state.getIn(["recommend", "bannerList"]),
   recommendList: state.getIn(["recommend", "recommendList"]),
+  // songsCount: state.getIn(["player", "playList"]).size,
+  enterLoading: state.getIn(["recommend", "enterLoading"]),
 });
 
 const mapDispatchToProps = (dispatch) => {
