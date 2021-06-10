@@ -5,16 +5,16 @@ import { withRouter } from "react-router-dom";
 import musicIcon from "./music.png";
 
 function RecommendList(props) {
-  const enterDetail = (id) => {
-    props.history.push(`/recommend/${id}`);
-  };
   return (
     <ListWrapper>
       <h1 className="title">推荐歌单</h1>
       <List>
         {props.recommendList.map((item) => {
           return (
-            <ListItem key={item.id} onClick={() => enterDetail(item.id)}>
+            <ListItem
+              key={item.id}
+              onClick={() => props.history.push(`/recommend/${item.id}`)}
+            >
               <div className="img_wrapper">
                 <div className="decorate"></div>
                 <LazyLoad
