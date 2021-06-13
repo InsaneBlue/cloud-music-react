@@ -12,6 +12,8 @@ import {
   CHANGE_ENTER_LOADING,
 } from "./constants";
 
+import { fromJS } from "immutable";
+
 // 切换类型
 export const changeCategory = (data) => ({
   type: CHANGE_CATOGORY,
@@ -58,13 +60,13 @@ export const changePullDownLoading = (data) => ({
 export const getHotSingerList = () => {
   return async (dispatch) => {
     try {
-      const data = await getHotSingerListRequest(0);
-      dispatch(changeSingerList(data));
+      const { artists } = await getHotSingerListRequest(0);
+      dispatch(changeSingerList(artists));
       dispatch(changeEnterLoading(false));
       dispatch(changePullDownLoading(false));
-      dispatch(changeListOffset(data.length));
+      dispatch(changeListOffset(artists.length));
     } catch (e) {
-      console.log("热门歌手数据获取失败");
+      console.log(e, "热门歌手数据获取失败");
     }
   };
 };
@@ -75,8 +77,8 @@ export const refreshMoreHotSingerList = () => {
     const offset = getState().getIn(["singers", "listOffset"]);
     const singerList = getState().getIn(["singers", "singerList"]).toJS();
     try {
-      const res = await getHotSingerListRequest(offset);
-      const data = [...singerList, ...res.artists];
+      const { artists } = await getHotSingerListRequest(offset);
+      const data = [...singerList, ...artists];
       dispatch(changeSingerList(data));
       dispatch(changePullUpLoading(false));
       dispatch(changeListOffset(data.length));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   NavContainer,
   ListContainer,
@@ -26,34 +26,134 @@ import Loading from "../../baseUI/loading/index";
 import { renderRoutes } from "react-router-config";
 
 function Singers(props) {
+  const scrollRef = useRef(null);
+
+  const {
+    singerList,
+    category,
+    alpha,
+    pageCount,
+    songsCount,
+    pullUpLoading,
+    pullDownLoading,
+    enterLoading,
+  } = props;
+
+  const {
+    getHotSinger,
+    updateCategory,
+    updateAlpha,
+    pullUpRefresh,
+    pullDownRefresh,
+  } = props;
+
+  useEffect(() => {
+    if (!singerList.length && !category && !alpha) {
+      getHotSinger();
+    }
+  }, []);
+
+  const enterDetail = (id) => {
+    props.history.push(`/singers/${id}`);
+  };
+
+  const handlePullUp = () => {
+    pullUpRefresh(!category, pageCount);
+  };
+
+  const handlePullDown = () => {
+    pullDownRefresh(category, pageCount);
+  };
+
+  const handleUpdateCategory = (newVal) => {
+    if (category === newVal) return;
+    updateCategory(newVal);
+    scrollRef.current.refresh();
+  };
+
+  const handleUpdateAlpha = (newVal) => {
+    if (alpha === newVal) return;
+    updateAlpha(newVal);
+    scrollRef.current.refresh();
+  };
+
+  const renderSingerList = () => {
+    const { singerList } = props;
+
+    return (
+      <List>
+        {singerList.toJS().map((item, index) => {
+          return (
+            <ListItem
+              key={item.accountId + "" + index}
+              onClick={() => enterDetail(item.id)}
+            >
+              <div className="img_wrapper">
+                <LazyLoad
+                  placeholder={
+                    <img
+                      width="100%"
+                      height="100%"
+                      src={require("./singer.png")}
+                      alt="music"
+                    />
+                  }
+                >
+                  <img
+                    src={`${item.picUrl}?param=300x300`}
+                    width="100%"
+                    height="100%"
+                    alt="music"
+                  />
+                </LazyLoad>
+              </div>
+              <span className="name">{item.name}</span>
+            </ListItem>
+          );
+        })}
+      </List>
+    );
+  };
+
   return (
     <div className="singers">
       <NavContainer>
-        <Horizen title={"分类(默认热门):"}></Horizen>
-        <Horizen title={"首字母:"}></Horizen>
+        <Horizen
+          title={"分类(默认热门):"}
+          list={categoryTypes}
+          handleClick={(v) => handleUpdateCategory(v)}
+        ></Horizen>
+        <Horizen
+          title={"首字母:"}
+          list={alphaTypes}
+          handleClick={(v) => handleUpdateAlpha(v)}
+        ></Horizen>
       </NavContainer>
 
-      <ListContainer></ListContainer>
+      <ListContainer play={songsCount}>
+        <Scroll
+          onScroll={forceCheck}
+          pullUp={handlePullUp}
+          pullDown={handlePullDown}
+          ref={scrollRef}
+          pullUpLoading={pullUpLoading}
+          pullDownLoading={pullDownLoading}
+        >
+          {renderSingerList()}
+        </Scroll>
+      </ListContainer>
 
+      {enterLoading ? (
+        <EnterLoading>
+          <Loading></Loading>
+        </EnterLoading>
+      ) : null}
       {renderRoutes(props.route.routes)}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    alpha: state.getIn(["singers", "alpha"]),
-    category: state.getIn(["singers", "category"]),
-    singerList: state.getIn(["singers", "singerList"]),
-    enterLoading: state.getIn(["singers", "enterLoading"]),
-    pullUpLoading: state.getIn(["singers", "pullUpLoading"]),
-    pullDownLoading: state.getIn(["singers", "pullDownLoading"]),
-    pageCount: state.getIn(["singers", "pageCount"]),
-    // songsCount: state.getIn(["player", "playList"]).size,
-  };
-};
-
-const mapActionsToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getHotSinger() {
       dispatch(getHotSingerList());
@@ -78,10 +178,25 @@ const mapActionsToProps = (dispatch) => {
     // 下拉刷新
     pullDownRefresh(category, alpha) {
       dispatch(changePullUpLoading(true));
+      dispatch(changeListOffset(0));
       if (category || alpha) dispatch(getHotSingerList());
       else dispatch(getSingerList());
     },
   };
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(React.memo(Singers));
+const mapStateToProps = (state) => ({
+  alpha: state.getIn(["singers", "alpha"]),
+  category: state.getIn(["singers", "category"]),
+  singerList: state.getIn(["singers", "singerList"]),
+  enterLoading: state.getIn(["singers", "enterLoading"]),
+  pullUpLoading: state.getIn(["singers", "pullUpLoading"]),
+  pullDownLoading: state.getIn(["singers", "pullDownLoading"]),
+  pageCount: state.getIn(["singers", "pageCount"]),
+  // songsCount: state.getIn(["player", "playList"]).size,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(React.memo(Singers));

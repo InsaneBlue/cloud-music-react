@@ -11,7 +11,7 @@ const defaultState = fromJS({
   listOffset: 0, // 请求列表的偏移不是page，是个数
 });
 
-export const reduces = (state = defaultState, action) => {
+export const reducer = (state = defaultState, action) => {
   const { type, data } = action;
 
   switch (type) {
