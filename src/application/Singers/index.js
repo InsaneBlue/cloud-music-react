@@ -66,8 +66,12 @@ function Singers(props) {
   };
 
   const handleUpdateCategory = (newVal) => {
-    if (category === newVal) return;
-    updateCategory(newVal);
+    console.log("category", category, "newVal", newVal, scrollRef);
+    if (category && category === newVal) {
+      updateCategory("");
+    } else {
+      updateCategory(newVal);
+    }
     scrollRef.current.refresh();
   };
 
@@ -77,6 +81,7 @@ function Singers(props) {
     scrollRef.current.refresh();
   };
 
+  // 歌手列表
   const renderSingerList = () => {
     const { singerList } = props;
 
@@ -121,11 +126,13 @@ function Singers(props) {
         <Horizen
           title={"分类(默认热门):"}
           list={categoryTypes}
+          oldVal={category}
           handleClick={(v) => handleUpdateCategory(v)}
         ></Horizen>
         <Horizen
           title={"首字母:"}
           list={alphaTypes}
+          oldVal={alpha}
           handleClick={(v) => handleUpdateAlpha(v)}
         ></Horizen>
       </NavContainer>
