@@ -168,7 +168,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     // 触底更新
     pullUpRefresh(hot) {
-      dispatch(changePullDownLoading(true));
+      dispatch(changePullUpLoading(true));
       if (hot) {
         dispatch(refreshMoreHotSingerList());
       } else {
@@ -177,7 +177,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     // 下拉刷新
     pullDownRefresh(category, alpha) {
-      dispatch(changePullUpLoading(true));
+      dispatch(changePullDownLoading(true));
       dispatch(changeListOffset(0));
       if (category || alpha) dispatch(getHotSingerList());
       else dispatch(getSingerList());

@@ -98,7 +98,7 @@ export const getSingerList = () => {
       const { artists } = await getSingerListRequest(category, alpha, offset);
       dispatch(changeSingerList(artists));
       dispatch(changeEnterLoading(false));
-      dispatch(changePullUpLoading(false));
+      dispatch(changePullDownLoading(false));
       dispatch(changeListOffset(artists.length));
     } catch (e) {
       console.log("歌手数据获取失败");
