@@ -62,11 +62,10 @@ function Singers(props) {
   };
 
   const handlePullDown = () => {
-    pullDownRefresh(category, pageCount);
+    pullDownRefresh(category, alpha);
   };
 
   const handleUpdateCategory = (newVal) => {
-    console.log("category", category, "newVal", newVal, scrollRef);
     if (category && category === newVal) {
       updateCategory("");
     } else {
@@ -76,8 +75,11 @@ function Singers(props) {
   };
 
   const handleUpdateAlpha = (newVal) => {
-    if (alpha === newVal) return;
-    updateAlpha(newVal);
+    if (alpha === newVal) {
+      updateAlpha("");
+    } else {
+      updateAlpha(newVal);
+    }
     scrollRef.current.refresh();
   };
 
@@ -186,8 +188,8 @@ const mapDispatchToProps = (dispatch) => {
     pullDownRefresh(category, alpha) {
       dispatch(changePullDownLoading(true));
       dispatch(changeListOffset(0));
-      if (category || alpha) dispatch(getHotSingerList());
-      else dispatch(getSingerList());
+      if (category || alpha) dispatch(getSingerList());
+      else dispatch(getHotSingerList());
     },
   };
 };
