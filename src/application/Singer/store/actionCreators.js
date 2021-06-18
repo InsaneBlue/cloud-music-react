@@ -31,7 +31,10 @@ export const getSingerInfo = (id) => {
   return async (dispatch, getState) => {
     // 判断是否重复点击
     const artistId = getState().getIn(["singerInfo", "artistId"]);
-    if (id === artistId) return;
+    if (id === artistId) {
+      dispatch(changeEnterLoading(false));
+      return;
+    }
 
     try {
       const { artist, hotSongs } = await getSingerInfoRequest(id);

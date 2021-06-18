@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 //   changeSequecePlayList,
 // } from "./../../application/Player/store/actionCreators";
 
-const SongsList = React.forwardRef((props, refs) => {
+const SongsList = React.forwardRef((props, ref) => {
   const [startIndex, setStartIndex] = useState(0);
 
   const {
@@ -77,7 +77,11 @@ const SongsList = React.forwardRef((props, refs) => {
     );
   };
   return (
-    <SongList ref={refs} showBackground={props.showBackground}>
+    <SongList
+      className="song-list"
+      ref={ref}
+      showBackground={props.showBackground}
+    >
       <div className="first_line">
         <div className="play_all" onClick={(e) => selectItem(e, 0)}>
           <i className="iconfont">&#xe6e3;</i>
@@ -91,6 +95,8 @@ const SongsList = React.forwardRef((props, refs) => {
     </SongList>
   );
 });
+
+SongsList.displayName = "SongsList";
 
 // 映射Redux全局的state到组件的props上
 const mapStateToProps = (state) => ({
