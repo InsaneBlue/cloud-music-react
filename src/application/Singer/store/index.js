@@ -4,6 +4,7 @@ import { fromJS } from "immutable";
 const defaultState = fromJS({
   artist: {},
   songsOfArtist: [],
+  artistId: "",
   loading: true,
 });
 
@@ -11,6 +12,8 @@ export const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case actionTypes.CHANGE_ARTIST:
       return state.set("artist", action.data);
+    case actionTypes.CHANGE_ARTIST_ID:
+      return state.set("artistId", action.data);
     case actionTypes.CHANGE_SONGS_OF_ARTIST:
       return state.set("songsOfArtist", action.data);
     case actionTypes.CHANGE_ENTER_LOADING:
