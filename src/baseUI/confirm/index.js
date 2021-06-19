@@ -121,4 +121,6 @@ const Confirm = forwardRef((props, ref) => {
   );
 });
 
+Confirm.displayName = "Confirm";
+
 export default React.memo(Confirm);

@@ -1,10 +1,15 @@
-import React, {useEffect, useImperativeHandle, useRef, forwardRef} from 'react';
-import styled from 'styled-components';
-import { prefixStyle } from './../../api/utils';
-import style from '../../assets/global-style';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  forwardRef,
+} from "react";
+import styled from "styled-components";
+import { prefixStyle } from "./../../api/utils";
+import style from "../../assets/global-style";
 
 const Container = styled.div`
-  .icon_wrapper{
+  .icon_wrapper {
     position: fixed;
     z-index: 1000;
     margin-top: -10px;
@@ -12,16 +17,15 @@ const Container = styled.div`
     color: ${style["theme-color"]};
     font-size: 14px;
     display: none;
-    transition: transform 1s cubic-bezier(.62,-0.1,.86,.57);
+    transition: transform 1s cubic-bezier(0.62, -0.1, 0.86, 0.57);
     transform: translate3d(0, 0, 0);
-    >div{
+    > div {
       transition: transform 1s;
     }
   }
-`
+`;
 
 const MusicNote = forwardRef((props, ref) => {
-
   const iconsRef = useRef();
 
   const ICON_NUMBER = 10;
@@ -29,37 +33,39 @@ const MusicNote = forwardRef((props, ref) => {
   const transform = prefixStyle("transform");
 
   const createNode = (txt) => {
-    const template = `<div class='icon_wrapper'>${txt}</div>`;
-    let tempNode = document.createElement('div');
-    tempNode.innerHTML = template;
-    return tempNode.firstChild;
-  }
+    const template = `<div class='icon_wrapper'>${txt}</div>`;
+    let tempNode = document.createElement("div");
+    tempNode.innerHTML = template;
+    return tempNode.firstChild;
+  };
 
   useEffect(() => {
-    for(let i = 0; i < ICON_NUMBER; i++){
+    for (let i = 0; i < ICON_NUMBER; i++) {
       let node = createNode(`<div class="iconfont">&#xe642;</div>`);
       iconsRef.current.appendChild(node);
     }
-    let domArray = [].slice.call(iconsRef.current.children)
-    domArray.forEach(item => {
+    let domArray = [].slice.call(iconsRef.current.children);
+    domArray.forEach((item) => {
       item.running = false;
-      item.addEventListener('transitionend', function() {
-        this.style['display'] = 'none';
-        this.style[transform] = `translate3d(0, 0, 0)`;
-        this.running = false;
+      item.addEventListener(
+        "transitionend",
+        function () {
+          this.style["display"] = "none";
+          this.style[transform] = `translate3d(0, 0, 0)`;
+          this.running = false;
 
-        let icon = this.querySelector('div');
-        icon.style[transform] = `translate3d(0, 0, 0)`;
-      }, false);
+          let icon = this.querySelector("div");
+          icon.style[transform] = `translate3d(0, 0, 0)`;
+        },
+        false
+      );
     });
-    // eslint-disable-next-line
   }, []);
 
-  
-  const startAnimation = ({x, y}) => {
-    for(let i = 0; i < ICON_NUMBER; i++) {
-      let domArray = [].slice.call(iconsRef.current.children)
-      let item = domArray[i]
+  const startAnimation = ({ x, y }) => {
+    for (let i = 0; i < ICON_NUMBER; i++) {
+      let domArray = [].slice.call(iconsRef.current.children);
+      let item = domArray[i];
       // 选择一个空闲的元素来开始动画
       if (item.running === false) {
         item.style.left = x + "px";
@@ -77,14 +83,12 @@ const MusicNote = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    startAnimation
+    startAnimation,
   }));
-  
-  return (
-    <Container ref={iconsRef}>
-    </Container>
-  )
-})
+
+  return <Container ref={iconsRef}></Container>;
+});
+
+MusicNote.displayName = "MusicNote";
 
 export default React.memo(MusicNote);
-

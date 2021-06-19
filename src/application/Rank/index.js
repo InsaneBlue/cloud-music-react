@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getRankList } from "./store";
 import Loading from "../../baseUI/loading";
@@ -20,7 +20,7 @@ function Rank(props) {
     }
   }, []);
 
-  const enterDetail = () => {
+  const enterDetail = (detail) => {
     props.history.push(`/rank/${detail.id}`);
   };
 

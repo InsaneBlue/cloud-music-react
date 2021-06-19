@@ -11,7 +11,7 @@ import { renderRoutes } from "react-router-config";
 import { EnterLoading } from "./../Singers/style";
 
 function Recommend(props) {
-  const { songsCount = 10, recommendList, bannerList, enterLoading } = props;
+  const { songsCount = 0, recommendList, bannerList, enterLoading } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
   useEffect(() => {
