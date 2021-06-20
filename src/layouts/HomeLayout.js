@@ -2,6 +2,7 @@ import React from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
 import { Top, Tab, TabItem } from "./HomeLayout.style";
+import Player from "../application/Player/index";
 
 function Home(props) {
   const { route } = props;
@@ -41,6 +42,9 @@ function Home(props) {
         </NavLink>
       </Tab>
       {renderRoutes(route.routes)}
+
+      {/* 播放器 */}
+      <Player></Player>
     </div>
   );
 }
