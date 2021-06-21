@@ -3,11 +3,11 @@ import { SongList, SongItem } from "./style";
 import { getName } from "../../api/utils";
 import { ONE_PAGE_COUNT } from "../../api/config";
 import { connect } from "react-redux";
-// import {
-//   changePlayList,
-//   changeCurrentIndex,
-//   changeSequecePlayList,
-// } from "./../../application/Player/store/actionCreators";
+import {
+  changePlayList,
+  changeCurrentIndex,
+  changeSequecePlayList,
+} from "./../../application/Player/store/actionCreators";
 
 const SongsList = React.forwardRef((props, ref) => {
   const [startIndex, setStartIndex] = useState(0);
@@ -108,15 +108,15 @@ const mapStateToProps = (state) => ({
 // 映射dispatch到props上
 const mapDispatchToProps = (dispatch) => {
   return {
-    // changePlayListDispatch(data) {
-    //   dispatch(changePlayList(data));
-    // },
-    // changeCurrentIndexDispatch(data) {
-    //   dispatch(changeCurrentIndex(data));
-    // },
-    // changeSequecePlayListDispatch(data) {
-    //   dispatch(changeSequecePlayList(data));
-    // },
+    changePlayListDispatch(data) {
+      dispatch(changePlayList(data));
+    },
+    changeCurrentIndexDispatch(data) {
+      dispatch(changeCurrentIndex(data));
+    },
+    changeSequecePlayListDispatch(data) {
+      dispatch(changeSequecePlayList(data));
+    },
   };
 };
 
