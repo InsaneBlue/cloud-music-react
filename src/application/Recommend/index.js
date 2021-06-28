@@ -49,7 +49,7 @@ function Recommend(props) {
 const mapStateToProps = (state) => ({
   bannerList: state.getIn(["recommend", "bannerList"]),
   recommendList: state.getIn(["recommend", "recommendList"]),
-  // songsCount: state.getIn(["player", "playList"]).size,
+  songsCount: state.getIn(["player", "playList"]).size,
   enterLoading: state.getIn(["recommend", "enterLoading"]),
 });
 

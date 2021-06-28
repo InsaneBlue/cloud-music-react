@@ -47,15 +47,18 @@ function Player(props) {
 
   const songReady = useRef(true);
   const audioRef = useRef();
+  const currentLyric = useRef();
+  const currentLineNum = useRef(0);
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [modeText, setModeText] = useState("");
+
+  const [currentPlayingLyric, setPlayingLyric] = useState("");
 
   const percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
   useEffect(() => {
-    // console.log(playList, currentIndex);
-
     if (
       !playList.length ||
       currentIndex === -1 ||
@@ -81,6 +84,9 @@ function Player(props) {
     togglePlayingDispatch(true);
     setCurrentTime(0);
     setDuration((current.dt / 1000) | 0);
+
+    // 获取歌词
+    getLyric(current.id);
   }, [playList, currentIndex]);
 
   // 按钮切换播放/暂停
@@ -133,10 +139,76 @@ function Player(props) {
     console.log("播放出错");
   };
 
+  const changeMode = () => {};
+
+  const handlePrev = () => {};
+
+  const onProgressChange = (newPercent) => {
+    const newTime = newPercent * duration;
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
+    if (!playing) togglePlayingDispatch(true);
+    if (currentLyric.current) currentLyric.current.seek(newTime * 1000);
+  };
+
+  const clickSpeed = () => {};
+
+  const handleLyric = ({ lineNum, txt }) => {
+    if (!currentLyric.current) return;
+    currentLineNum.current = lineNum;
+    setPlayingLyric(txt);
+  };
+
+  // 请求歌词
+  const getLyric = async (id) => {
+    if (currentLyric.current) {
+      currentLyric.current.stop();
+    }
+    try {
+      const { lrc: { lyric } = {} } = await getLyricRequest(id);
+      if (!lyric) {
+        currentLyric.current = null;
+        return;
+      }
+
+      currentLyric.current = new Lyric(lyric, handleLyric, speed);
+      currentLyric.current.play();
+      currentLineNum.current = 0;
+      currentLyric.current.seek(0);
+    } catch (e) {
+      currentLyric.current = "";
+      songReady.current = true;
+      audioRef.current.play();
+    }
+  };
+
   return (
     <>
       {/* 播放页 */}
-
+      {isEmptyObject(currentSong) ? null : (
+        <NormalPlayer
+          song={currentSong}
+          full={fullScreen}
+          playing={playing}
+          mode={mode}
+          percent={percent}
+          modeText={modeText}
+          duration={duration}
+          currentTime={currentTime}
+          currentLyric={currentLyric.current}
+          currentPlayingLyric={currentPlayingLyric}
+          speed={speed}
+          changeMode={changeMode}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+          onProgressChange={onProgressChange}
+          currentLineNum={currentLineNum.current}
+          clickPlaying={clickPlaying}
+          toggleFullScreenDispatch={toggleFullScreenDispatch}
+          togglePlayListDispatch={togglePlayListDispatch}
+          clickSpeed={clickSpeed}
+        ></NormalPlayer>
+      )}
       {/* 底部播放栏 */}
       {isEmptyObject(currentSong) ? null : (
         <MiniPlayer
