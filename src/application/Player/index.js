@@ -139,6 +139,16 @@ function Player(props) {
     console.log("播放出错");
   };
 
+  // 中断事件
+  const handlePause = () => {
+    togglePlayingDispatch(false);
+  };
+
+  // 播放事件
+  const handlePlay = () => {
+    togglePlayingDispatch(true);
+  };
+
   const changeMode = () => {};
 
   const handlePrev = () => {};
@@ -231,6 +241,8 @@ function Player(props) {
         onTimeUpdate={updateTime}
         onEnded={handleEnd}
         onError={handleError}
+        onPause={handlePause}
+        onPlay={handlePlay}
       ></audio>
     </>
   );
