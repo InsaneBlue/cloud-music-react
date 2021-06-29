@@ -28,6 +28,7 @@ function Player(props) {
     fullScreen,
     currentSong: immuCurrentSong,
     playList: immuPlayList,
+    sequencePlayList: immuSequencePlayList,
     currentIndex,
     speed,
     mode,
@@ -42,6 +43,7 @@ function Player(props) {
 
   const currentSong = immuCurrentSong.toJS();
   const playList = immuPlayList.toJS();
+  const sequencePlayList = immuSequencePlayList.toJS();
 
   const [preSong, setPreSong] = useState({});
 
@@ -118,12 +120,21 @@ function Player(props) {
       return;
     }
 
-    const index = currentIndex >= len - 1 ? currentIndex + 1 : 0;
+    const index = currentIndex <= len - 1 ? currentIndex + 1 : 0;
 
     // 若当前不是正在播放
     if (!playing) togglePlayingDispatch(true);
 
     // 按序播放下一首
+    changeCurrentIndexDispatch(index);
+  };
+
+  // 播放上一首
+  const handlePrev = () => {
+    const len = playList.length;
+
+    const index = currentIndex === 0 ? len - 1 : currentIndex - 1;
+
     changeCurrentIndexDispatch(index);
   };
 
@@ -139,19 +150,41 @@ function Player(props) {
     console.log("播放出错");
   };
 
-  // 中断事件
+  // 播放中断
   const handlePause = () => {
     togglePlayingDispatch(false);
   };
 
-  // 播放事件
+  // 开始播放
   const handlePlay = () => {
     togglePlayingDispatch(true);
   };
 
-  const changeMode = () => {};
+  // 切换播放模式
+  const changeMode = () => {
+    const newMode = (mode + 1) % 3;
 
-  const handlePrev = () => {};
+    if (newMode === 0) {
+      // 顺序播放
+      changePlayListDispatch(sequencePlayList);
+      const index = findIndex(currentSong, sequencePlayList);
+      changeCurrentIndexDispatch(index);
+      setModeText("顺序循环");
+    } else if (newMode === 2) {
+      // 单曲循环
+      changePlayListDispatch(sequencePlayList);
+      setModeText("单曲循环");
+    } else if (newMode === 3) {
+      // 随机播放
+      const newList = shuffle(sequencePlayList);
+      const index = findIndex(currentSong, newList);
+      changePlayListDispatch(newList);
+      changeCurrentIndexDispatch(index);
+      setModeText("随机播放");
+    }
+    changeModeDispatch(newMode);
+    toastRef.current.show();
+  };
 
   const onProgressChange = (newPercent) => {
     const newTime = newPercent * duration;
