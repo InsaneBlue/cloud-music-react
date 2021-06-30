@@ -39,6 +39,9 @@ function Player(props) {
     changeCurrentDispatch,
     togglePlayingDispatch,
     changeCurrentIndexDispatch,
+    changeSpeedDispatch,
+    changeModeDispatch,
+    changePlayListDispatch,
   } = props;
 
   const currentSong = immuCurrentSong.toJS();
@@ -47,8 +50,9 @@ function Player(props) {
 
   const [preSong, setPreSong] = useState({});
 
-  const songReady = useRef(true);
   const audioRef = useRef();
+  const toastRef = useRef();
+  const songReady = useRef(true);
   const currentLyric = useRef();
   const currentLineNum = useRef(0);
 
@@ -69,8 +73,6 @@ function Player(props) {
       !songReady.current
     )
       return;
-
-    // songReady.current = false;
 
     // 获取当前点击播放歌曲的信息
     const current = playList[currentIndex];
@@ -194,8 +196,15 @@ function Player(props) {
     if (currentLyric.current) currentLyric.current.seek(newTime * 1000);
   };
 
-  const clickSpeed = () => {};
+  // 切换播放速度
+  const clickSpeed = (newSpeed) => {
+    changeSpeedDispatch(newSpeed);
+    audioRef.current.playbackRate = newSpeed;
+    currentLyric.current.changeSpeed(newSpeed);
+    currentLyric.current.seek(currentTime * 1000);
+  };
 
+  // 处理歌词
   const handleLyric = ({ lineNum, txt }) => {
     if (!currentLyric.current) return;
     currentLineNum.current = lineNum;
@@ -277,6 +286,9 @@ function Player(props) {
         onPause={handlePause}
         onPlay={handlePlay}
       ></audio>
+
+      {/* 播放类型提示 */}
+      <Toast text={modeText} ref={toastRef}></Toast>
     </>
   );
 }
