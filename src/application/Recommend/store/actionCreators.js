@@ -1,6 +1,9 @@
 import * as actionTypes from "./constants";
 import { fromJS } from "immutable";
-import { getBannerRequest, getRecommendListRequest } from "../../../api/requst";
+import {
+  getBannerRequest,
+  getRecommendListRequest,
+} from "../../../api/request";
 
 export const getBannerList = () => {
   return async (dispatch) => {

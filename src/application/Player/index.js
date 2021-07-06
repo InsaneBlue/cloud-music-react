@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import Lyric from "../../api/lyric-parser";
 import { playMode } from "../../api/config";
-import { getLyricRequest } from "../../api/requst";
+import { getLyricRequest } from "../../api/request";
 import { isEmptyObject, shuffle, findIndex, getSongUrl } from "../../api/utils";
 
 import PlayList from "./play-list/index";

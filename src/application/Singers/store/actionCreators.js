@@ -1,7 +1,7 @@
 import {
   getHotSingerListRequest,
   getSingerListRequest,
-} from "../../../api/requst";
+} from "../../../api/request";
 import {
   CHANGE_SINGER_LIST,
   CHANGE_CATOGORY,

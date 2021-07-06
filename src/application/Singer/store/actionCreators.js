@@ -5,7 +5,7 @@ import {
   CHANGE_ENTER_LOADING,
 } from "./constants";
 import { fromJS } from "immutable";
-import { getSingerInfoRequest } from "../../../api/requst";
+import { getSingerInfoRequest } from "../../../api/request";
 
 export const changeArtist = (data) => ({
   type: CHANGE_ARTIST,

@@ -5,7 +5,7 @@ import {
   CHANGE_START_INDEX,
   CHANGE_ENTER_LOADING,
 } from "./constants";
-import { getAlbumDetailRequest } from "../../../api/requst";
+import { getAlbumDetailRequest } from "../../../api/request";
 import { fromJS } from "immutable";
 
 const changeCurrentAlbum = (data) => ({
