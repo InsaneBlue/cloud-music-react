@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "es5",// 目标语言的版本
-    "lib": ["dom", "dom.iterable", "es2015.promise", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015.promise",
+      "esnext"
+    ],
     // 编译时引入的 ES 功能库，包括：es5 、es6、es7、dom 等。// 如果未设置，则默认为： target 为 es5 时: ["dom", "es5", "scripthost"]
     //target 为 es6 时: ["dom", "es6", "dom.iterable", "scripthost"]
     "allowJs": true, // 允许编译器编译JS，JSX文件
